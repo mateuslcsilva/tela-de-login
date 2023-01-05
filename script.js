@@ -33,6 +33,16 @@ const hideWarning = (element, warning) => {
   warning.classList.remove("active-warning");
 };
 
+const showingUpModal = (id) => {
+  let modalTrigger = document.createElement("button");
+  modalTrigger.setAttribute("data-bs-toggle", "modal");
+  modalTrigger.setAttribute("data-bs-target", `#${id}`);
+  modalTrigger.style = "display: none;";
+  document.body.append(modalTrigger);
+  modalTrigger.click();
+  modalTrigger.remove();
+};
+
 const emailTester = (email) => {
   const re = /\S+@\S+\.\S+/;
   return re.test(email);
@@ -86,16 +96,6 @@ const getNewUserData = (element, dataName) => {
   }
 
   cleaningUpSigningUpWarnings(dataName);
-};
-
-const showingUpModal = (id) => {
-  let modalTrigger = document.createElement("button");
-  modalTrigger.setAttribute("data-bs-toggle", "modal");
-  modalTrigger.setAttribute("data-bs-target", `#${id}`);
-  modalTrigger.style = "display: none;";
-  document.body.append(modalTrigger);
-  modalTrigger.click();
-  modalTrigger.remove();
 };
 
 const cleaningUpSigningUpWarnings = (dataName) => {
@@ -224,7 +224,7 @@ const signingUp = (element) => {
       .classList.add("active-warning");
   }
 
-  if (returning) return
+  if (returning) return;
 
   if (
     newUserObject.newUser &&
@@ -298,6 +298,58 @@ const loggingIn = (element) => {
   document.querySelector("#user").value = "";
 
   showingUpModal("logingUpModal");
+};
+
+const resetChangePasswordBox = () => {
+  document.querySelector("#newPassword1").value = "";
+  document.querySelector("#newPasswordRepeat").value = "";
+  document.querySelector("#userEmail").value = "";
+  document.querySelector(".change-password-first-step").classList.add("active");
+  document
+    .querySelector(".change-password-second-step")
+    .classList.remove("active");
+};
+
+const searchUserEmail = (element) => {
+  if (searchBy("userEmail", element.value, false)) {
+    document
+      .querySelector(".change-password-first-step")
+      .classList.remove("active");
+    document
+      .querySelector(".change-password-second-step")
+      .classList.add("active");
+  } else {
+    alert("Email não encontrado");
+  }
+};
+
+const invalidPassword = (element, warningText) => {
+  if (warningText == ".change-password-warning") {
+    if (element.value.length < 8) {
+      showWarning(element, document.querySelector(warningText));
+    } else {
+      hideWarning(element, document.querySelector(warningText));
+    }
+  } else {
+    if (element.value != document.querySelector("#newPassword1").value) {
+      showWarning(element, document.querySelector(warningText));
+    } else {
+      hideWarning(element, document.querySelector(warningText));
+    }
+  }
+};
+
+const changePassword = () => {
+  if (document.querySelector("#newPasswordRepeat").value == document.querySelector("#newPassword1").value && document.querySelector("#newPassword1").value.length >= 8 ) {
+        accs.forEach((element) => {
+      if (element.userEmail == document.querySelector("#userEmail").value) {
+        element.userPassword = document.querySelector("#newPassword1").value;
+      }
+    });
+  localStorage.setItem("accs", JSON.stringify(accs));
+  alert("Senha alterada!");
+  document.querySelector("#closeChangePasswordBox").click();
+  } 
 };
 
 /*      -----------------       sync       -----------------      */

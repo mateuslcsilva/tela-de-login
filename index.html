@@ -114,7 +114,7 @@
 						<input type='password' id='password' class='form-control mb-3' autocomplete="off">
 						<div class='d-flex flex-column justify-content-center align-items-center vw-15'
 							style="position: relative;">
-							<button style="all: unset;" onclick="fodase()"><a href="#">Esqueceu sua senha?</a></button>
+							<button style="all: unset;" onclick="showingUpModal('changePasswordModal')"><a href="#">Esqueceu sua senha?</a></button>
 							<button class='btn btn-dark w-100 mt-2' onclick="loggingIn(this)">Entrar</button>
 							<h5 class='waning-incorrect-password'>Senha incorreta!<h5>
 									<h5 class='waning-incorrect-user'>Usuário não existe!<h5>
@@ -178,6 +178,53 @@
 								</div>
 								<div class="modal-footer d-flex justify-content-center">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok!</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Modal -->
+					<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModal" 
+						aria-hidden="true">
+						<div class="modal-dialog  modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="changePasswordModalTitle" >Troque sua senha</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class='d-flex flex-column w-40 change-password-box'>
+										<div class="change-password-first-step active">
+											<p>Insira o email cadastrado para trocar sua senha.</p>
+											<div style="position: relative;" class="change-password-input">
+												<label for='userEmail'>Email:*</label>
+												<input id='userEmail' class='form-control mb-3' autocomplete="off"
+													onkeyup="/* getNewUserData(this, 'email') */"   >
+												<p class='warning'>* E-mail inválido</p>
+												<p class='warning new-email-warning'>* Preencha seu email!</p>
+												<p class='warning email-used-warning'>* Email já em uso!</p>
+												<button class='btn btn-primary w-100 mt-2 d-block' onclick="searchUserEmail(document.querySelector('#userEmail'))">Buscar</button>
+											</div>
+										</div>
+										<div class="change-password-second-step ">
+											<p>Insira agora a nova senha.</p>
+											<div style="position: relative;" class="change-password-input"> 
+												<label for='newPassword1'>Senha:*</label>
+												<input id='newPassword1' type="password" class='form-control mb-4' autocomplete="off"
+													onkeyup="invalidPassword(this, '.change-password-warning')">
+												<p class='change-password-warning'>* Senha deve ter 8 ou mais dígitos.</p>
+												<label for='newPasswordRepeat'>Senha:*</label>
+												<input id='newPasswordRepeat' type="password" class='form-control' autocomplete="off"
+													onkeyup="invalidPassword(this, '.change-repeat-password-warning')">
+												<p class='change-repeat-password-warning'>* As senhas devem ser iguais.</p>
+												<button class='btn btn-primary w-100 mt-4 d-block' onclick="changePassword()">Confirmar</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer d-flex justify-content-center">
+									<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="resetChangePasswordBox()" id="closeChangePasswordBox">Fechar</button>
 								</div>
 							</div>
 						</div>

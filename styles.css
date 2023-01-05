@@ -84,7 +84,7 @@ display: none;
 }
 
 .active-warning{
-display: inline-block;
+display: inline-block !important;
 }
 
 .waning-incorrect-password,
@@ -127,6 +127,43 @@ transition: .2s ease;
 width: 100%;
 left: 0;
 transition: .2s ease;
+}
+
+.change-password-input{
+  position: relative;
+  width: 100%;
+  padding: 5% 20%;
+}
+
+.change-password-active{
+  display: block;
+}
+
+.change-password-first-step.active, 
+.change-password-second-step.active{
+  display: block;
+}
+
+.change-password-first-step, 
+.change-password-second-step{
+  display: none;
+}
+
+.change-password-warning,
+.change-repeat-password-warning{
+  color: red;
+  position: absolute;
+  bottom: 55%;
+  right: 0;
+  display: none;
+  }
+
+  .change-repeat-password-warning{
+    bottom: 25%;
+  }
+
+  #newPasswordRepeat{
+  margin-bottom: 50px;
 }
 
 @keyframes fade-away {
